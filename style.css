@@ -43,14 +43,14 @@ h2 {
 }
 
 #gameboard {
-    width: 500px;
+    width: 400px;
     display: flex;
     flex-wrap: wrap;
 }
 
 .box {
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
     display: grid;
     padding: 0px 10px;
     color: var(--orange);
@@ -88,7 +88,7 @@ h2 {
 .text {
     grid-row: 1;
     grid-column: 1;
-    font-size: 75px;
+    font-size: 50px;
     place-self: center;
 }
 
