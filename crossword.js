@@ -44,7 +44,9 @@ solution = "BETMADEHEDGEONLYGUY"
 
 const startGame = () => {
     for (let i = 0; i < 25; i++) {
-        boxes[i].addEventListener("click", function() {select(i)})
+        if (boxes[i].id != "X") {
+            boxes[i].addEventListener("click", function() {select(i)})
+        }
     }
     document.addEventListener("keydown", input)
     restartBtn.addEventListener("click", restart)
@@ -110,11 +112,31 @@ function highlight(color) {
     }
 }
 
+function next_row(r) {
+    if (r + 1 >= 5 || boxes[index(r + 1, col)].id == "X") {
+        return [row + 1, col]
+    } else if (boxes[index(r + 1, col)].firstChild.textContent == "") {
+        return [r + 1, col]
+    } else {
+        return next_row(r + 1)
+    }
+}
+
+function next_col(c) {
+    if (c + 1 >= 5 || boxes[index(row, c + 1)].id == "X") {
+        return [row, col + 1]
+    } else if (boxes[index(row, c + 1)].firstChild.textContent == "") {
+        return [row, c + 1]
+    } else {
+        return next_col(c + 1)
+    }
+}
+
 function next() {
     if (dir == "down") {
-        return [row + 1, col]
+        return next_row(row)
     } else {
-        return [row, col + 1]
+        return next_col(col)
     }
 }
 
