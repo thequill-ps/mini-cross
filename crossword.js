@@ -1,6 +1,8 @@
 let clueText = document.getElementById("clue")
 let restartBtn = document.getElementById("restartBtn")
+let clues = document.getElementById("clues")
 let boxes = Array.from(document.getElementsByClassName("box"))
+let nums = Array.from(document.getElementsByClassName("num"))
 
 row = 2
 col = 2
@@ -23,23 +25,34 @@ across = ["1A: Risk or wager",
     "7A: Generic male"
 ]
 
+text = (
+"Down:\n\
+    1. Not well\n\
+    2. Like an octagon or rock music?\n\
+    3. Can be worn or put into the ground\n\
+    4. What food choices are on\n\
+    5. With 5-Down, Proof School mascot\n\n\
+Across:\n\
+    1. Risk or wager\n\
+    4. Created\n\
+    5. With 5-Down, Proof School mascot\n\
+    6. The one and ____\n\
+    7. Generic male\n"
+)
+
 solution = "BETMADEHEDGEONLYGUY"
 
 const startGame = () => {
-    boxes.forEach(box => box.addEventListener("click", boxClicked))
+    for (let i = 0; i < 25; i++) {
+        boxes[i].addEventListener("click", function() {select(i)})
+    }
     document.addEventListener("keydown", input)
-    restartBtn.addEventListener('click', restart)
+    restartBtn.addEventListener("click", restart)
+    clues.textContent = text
 }
 
 function index(row, col) {
     return row * 5 + col
-}
-
-function boxClicked(e) {
-    const id = e.target.id
-    if (id != "X") {
-        select(parseInt(id))
-    }
 }
 
 function select(i) {
@@ -124,8 +137,8 @@ function input(e) {
 
 function write(letter) {
     var b = boxes[index(row, col)]
-    var nq = b.textContent
-    b.textContent = letter
+    var nq = b.firstChild.textContent
+    b.firstChild.textContent = letter
     
     var [r, c] = next()
     var i = index(r, c)
@@ -137,13 +150,13 @@ function write(letter) {
 
 function del() {
     var b = boxes[index(row, col)]
-    if (b.textContent != "") {
-        b.textContent = ""
+    if (b.firstChild.textContent != "") {
+        b.firstChild.textContent = ""
     } else {
         var [r, c] = prev()
         var i = index(r, c)
         if (r >= 0 && r < 5 && c >= 0 && c < 5 && boxes[i].id != "X") {
-            boxes[i].textContent = ""
+            boxes[i].firstChild.textContent = ""
             select(i)
         }
     }
@@ -151,17 +164,17 @@ function del() {
 
 function restart() {
     for (const b of boxes) {
-        b.textContent = ""
+        b.firstChild.textContent = ""
     }
 }
 
 function check_solve(nq) {
     var s = ""
     for (const b of boxes) {
-        if (b.id != "X" && b.textContent == "") {
+        if (b.id != "X" && b.firstChild.textContent == "") {
             return
         } else {
-            s += b.textContent
+            s += b.firstChild.textContent
         }
     }
 
