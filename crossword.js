@@ -167,7 +167,7 @@ function write(letter) {
     if (r >= 0 && r < 5 && c >= 0 && c < 5 && boxes[i].id != "X") {
         select(i)
     }
-    setTimeout(function() {check_solve(nq)}, 1)
+    setTimeout(function() {check_solve(nq)}, 10)
 }
 
 function del() {
